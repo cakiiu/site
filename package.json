@@ -1,0 +1,21 @@
+{
+    "name": "meu-site",
+    "version": "1.0.0",
+    "description": "Servidor Express para meu site",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "mysql": "^2.18.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.0"
+    },
+    "keywords": [],
+    "author": "abg",
+    "license": "MIT"
+}
