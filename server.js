@@ -24,11 +24,11 @@ connection.connect((err) => {
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'criar_conta')));
+app.use(express.static(path.join(__dirname, 'criar')));
 
 // Rota GET para servir o arquivo HTML
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './criar_conta', 'index.html'));
+app.get('/criar', (req, res) => {
+    res.sendFile(path.join(__dirname, './criar', 'index.html'));
 });
 
 app.get('/login', (req, res) => {
