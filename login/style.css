@@ -93,8 +93,8 @@ input {
   
   
   input:hover {
-    border-color: #3498db; 
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); 
+    border-color: #000000; 
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
     transform: scale(1.05); 
   }
 
@@ -103,7 +103,7 @@ input {
     font-size: 16px;
     border: 2px solid #ccc;
     border-radius: 5px;
-    transition: all 0.3s ease; 
+    transition: background-color 0.3s, transform 0.2; 
     height: 900px;
     cursor: pointer;
   }
@@ -111,6 +111,7 @@ input {
   
   button:hover {
     border-color: #000000; 
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); 
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); 
+    color: rgb(255, 255, 255);
     transform: scale(1.05); 
   }
