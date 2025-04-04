@@ -17,7 +17,7 @@ body::before {
 
 .formulario {
     text-align: center;
-    margin: 60px; 
+    margin: 5%; 
     padding: 60px; 
     border: 2px solid rgb(255, 255, 255); 
     border-radius: 15px;
@@ -37,19 +37,26 @@ h1 {
     color: white;
     background-color: black;
     width: 150px;
-    height: 30px;
+    height: 36px;
     margin-top: 10px;
-    font-size: 12px;
+    font-size:14px;
+    font-family: Calibri;
+    font-weight: lighter;
+    border-width: 1px;
 }
 
 .conta {
-    margin-top: 30px;
+    margin-top: 6%;
     color: rgba(0, 0, 0, 0.541);
+    font-family: Calibri;
+    font-size: 16px;
 }
 
 .link {
     color: rgb(0, 0, 0);
     text-decoration: none;
+    font-family: Calibri;
+    font-weight: lighter;
 }
 
 #videoback {
@@ -60,4 +67,17 @@ h1 {
   height: 100%; /* Faz o vídeo ocupar toda a altura da tela */
   object-fit: cover; /* Faz o vídeo cobrir toda a área, cortando-o se necessário */
   z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+}
+
+.caixa {
+    height: 30px;
+    border-radius: 6px ;
+    border-width: 1px;
+}
+
+.nomes {
+    font-family: Calibri;
+    position: relative ;
+    top: 8px;
+    font-size: 18px;
 }
