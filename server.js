@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
-
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +22,9 @@ connection.connect((err) => {
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'criar')));
+app.use(express.static(path.join(__dirname, 'assets')));
+
+app.use(express.static(path.join(__dirname, 'styles')));
 
 // Rota GET para servir o arquivo HTML
 app.get('/criar', (req, res) => {
