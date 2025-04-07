@@ -2,6 +2,10 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 require('dotenv').config();
 
 const app = express();
@@ -26,8 +30,7 @@ app.use(express.static(path.join(__dirname, 'assets')));
 
 app.use(express.static(path.join(__dirname, 'styles')));
 
-// Rota GET para servir o arquivo HTML
-app.get('/criar', (req, res) => {
+app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, './criar', 'index.html'));
 });
 
@@ -35,26 +38,45 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, './login', 'index.html'));
 });
 
-// Rota POST para processar o formulário
-app.post('/enviar', (req, res) => {
-    const { email, senha } = req.body;
-    const query = `INSERT INTO usuarios (email, senha) VALUES (?, ?)`;
-
-    connection.query(query, [email, senha], (err, result) => {
-        if (err) throw err;
-        res.send('Dados inseridos com sucesso!');
-    });
-});
-
-app.post('/create', (req, res) => {
+app.post('/create', async (req, res) => {
     const { nome, email, senha } = req.body;
+
+    const hash = await bcrypt.hash(senha, saltRounds); // Cria um hash para essa senha baseada no nível de segurança especificado lá em cima no saltRounds
+
     const query = `INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`;
 
-    connection.query(query, [nome, email, senha], (err, result) => {
+    connection.query(query, [nome, email, hash], (err, result) => // Manda o hash da senha encryptada em vez da senha
+    {
         if (err) throw err;
         res.send('Dados inseridos com sucesso!');
     });
 });
+
+// Sistema de login
+
+app.post('/enviar', (req, res) => {
+    const { email, senha } = req.body;
+
+    const query = `SELECT * FROM usuarios WHERE email = ?`; // Query para achar o email que o usuário digitou
+
+    connection.query(query, [email], async (err, result) =>
+    {
+        if (err) throw err;
+
+        if (result.lenght === 0) // Verificar se achou
+            return res.status(401).send("Usuário não encontrado");
+
+        const usuario = result[0];
+
+        const match = await bcrypt.compare(senha, usuario.senha); // Comparar a senha que o usuário digitou com o hash do banco
+
+        if (match)
+            res.send("Login bem sucedido");
+        else
+            res.status(401).send('Email e/ou senha incorretos');
+    });
+});
+
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
