@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivêntia</title>
+    <link rel="stylesheet" href="primeira.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    
+    <video autoplay muted loop id="videoback">
+        <source src="ondas.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo em HTML5.
+    </video>
+
+    
+    <header>
+        <div class="left">
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="dropdown-menu" id="dropdown">
+                <a href="#">Início</a>
+                <a href="#">Coleções</a>
+                <a href="#">Sobre</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        
+        <div class="center">
+            <img src="logo.png" alt="Vivêntia Logo" class="logo">
+        </div>
+
+        <div class="right"></div>
+    </header>
+
+    
+    <main>
+        <div class="welcome">Bem-vindo</div>
+    </main>
+
+    
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown');
+            menu.classList.toggle('show');
+        }
+
+        
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('dropdown');
+            const toggle = document.querySelector('.menu-toggle');
+            if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
+
+</body>
+</html>
