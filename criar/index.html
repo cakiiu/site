@@ -33,7 +33,9 @@
 
       <label for="Senha" class="nomes">Senha</label>
       <br /><br />
-      <input type="password" name="senha" id="pass" class="caixa" required />
+      <input type="password" name="senha" id="pass" class="caixa" required 
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$"
+      title="A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um símbolo.">
       <br /><br />
 
       <button type="submit" class="limp">Entrar</button>
