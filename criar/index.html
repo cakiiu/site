@@ -1,60 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/criar.css">
-    <title>Servos™</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/criar.css" />
+  <title>Servos™</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-    <video autoplay muted loop id="videoback">
-        <source src="/ondas.mp4" type="video/mp4">
-    </video>
-    
-    <div class="formulario fade-in" id="formulario">
-        <form action="/create" method="post">
-            <h1>Crie a Conta</h1>
-            <br>
+  <video autoplay muted loop id="videoback">
+    <source src="/ondas.mp4" type="video/mp4" />
+  </video>
 
-            <label for="username" class="nomes">Usuário</label>
-            <br>
-            <br>
-            <input type="text" name="nome" id="user" class="caixa" required> 
-            <br>
-            <br>
+  <div class="formulario fade-in" id="formulario">
+    <form id="criarContaForm">
+      <h1>Crie a Conta</h1>
+      <br />
 
-            <label for="email" class="nomes">Email</label>
-            <br>
-            <br>
-            <input type="email" name="email" id="emai" class="caixa" required>
-            <br>
-            <br>
+      <label for="username" class="nomes">Usuário</label>
+      <br /><br />
+      <input type="text" name="nome" id="user" class="caixa" required />
+      <br /><br />
 
-            <label for="Senha" class="nomes">Senha</label>
-            <br>
-            <br>
-            <input type="password" name="senha" id="pass" class="caixa" required>
-            
-            <br>
-            <br>
-            
-            <button type="submit" class="limp"> Entrar </button>
-        </form>
+      <label for="email" class="nomes">Email</label>
+      <br /><br />
+      <input type="email" name="email" id="emai" class="caixa" required />
+      <br /><br />
 
-        <p class="conta"> Já tem uma conta? </p> <a href="../login" class="link"> Entre </a>
-    </div>
+      <label for="Senha" class="nomes">Senha</label>
+      <br /><br />
+      <input type="password" name="senha" id="pass" class="caixa" required />
+      <br /><br />
 
-    <script>
-        window.addEventListener('load', () => {
-          const form = document.getElementById('formulario');
-          form?.classList.add('show');
+      <button type="submit" class="limp">Entrar</button>
+    </form>
+
+    <p class="conta">Já tem uma conta?</p>
+    <a href="../login" class="link">Entre</a>
+  </div>
+
+  <div id="popup" class="popup">
+    <div class="popup-content" id="popupContent">Mensagem</div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      const form = document.getElementById('formulario');
+      form?.classList.add('show');
+    });
+
+    // Função para mostrar popup
+    function mostrarPopup(mensagem, tipo = 'success') {
+      const popup = document.getElementById('popup');
+      const popupContent = document.getElementById('popupContent');
+
+      popupContent.textContent = mensagem;
+      popup.className = `popup ${tipo} mostrar`;
+
+      setTimeout(() => {
+        popup.classList.remove('mostrar');
+      }, 2500);
+    }
+
+    // Envio do formulário via fetch
+    const form = document.getElementById('criarContaForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('user').value;
+      const email = document.getElementById('emai').value;
+      const senha = document.getElementById('pass').value;
+
+      try {
+        const response = await fetch('/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `nome=${encodeURIComponent(nome)}&email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
         });
-      </script>
+
+        const mensagem = await response.text();
+
+        if (response.ok) {
+          mostrarPopup('Conta criada com sucesso!', 'success');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 2500);
+        } else {
+          mostrarPopup(mensagem || 'Erro ao criar conta.', 'error');
+        }
+      } catch (err) {
+        mostrarPopup('Erro no servidor.', 'error');
+      }
+    });
+  </script>
+
 </body>
 </html>

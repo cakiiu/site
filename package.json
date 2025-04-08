@@ -4,19 +4,19 @@
     "description": "Servidor Express para meu site",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js",
-        "dev": "nodemon server.js"
+      "start": "node server.js",
+      "dev": "nodemon server.js"
     },
     "dependencies": {
-        "bcrypt": "^5.1.1",
-        "dotenv": "^16.4.7",
-        "express": "^4.21.2",
-        "mysql": "^2.18.1"
+      "bcrypt": "^5.1.1",
+      "dotenv": "^16.4.7",
+      "express": "^4.21.2",
+      "mysql": "^2.18.1"
     },
     "devDependencies": {
-        "nodemon": "^3.0.0"
+      "nodemon": "^3.0.0"
     },
     "keywords": [],
     "author": "abg",
     "license": "MIT"
-}
+  }

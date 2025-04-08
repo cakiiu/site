@@ -48,7 +48,7 @@ app.post('/create', async (req, res) => {
     connection.query(query, [nome, email, hash], (err, result) => // Manda o hash da senha encryptada em vez da senha
     {
         if (err) throw err;
-        res.send('Dados inseridos com sucesso!');
+            res.send('Conta criada com sucesso!');
     });
 });
 
@@ -63,7 +63,7 @@ app.post('/enviar', (req, res) => {
     {
         if (err) throw err;
 
-        if (result.lenght === 0) // Verificar se achou
+        if (result.length === 0) // Verificar se achou
             return res.status(401).send("Usuário não encontrado");
 
         const usuario = result[0];

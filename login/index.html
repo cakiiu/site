@@ -12,13 +12,17 @@
 </head>
 
 <body>
-
     <video autoplay muted loop id="videoback">
         <source src="/ondas.mp4" type="video/mp4">
     </video>
     
     <div class="formulario fade-in" id="formulario">
-        <form action="enviar" method="post">
+
+        <div id="erroLogin" class="erro-login" style="display: none; color: red; margin-bottom: 10px;">
+            Email ou senha incorretos.
+          </div>
+
+        <form id="loginForm">
             <h1>Login</h1>
             <br>
 
@@ -41,7 +45,7 @@
             <button type="submit" class="limp"> Entrar </button>
         </form>
 
-        <p class="conta"> Não tem uma conta? </p> <a href="../criar" class="link"> Criar conta </a>
+        <p class="conta"> Não tem uma conta? </p> <a href="../signup" class="link"> Criar conta </a>
     </div>
 
     <script>
@@ -50,5 +54,57 @@
           form?.classList.add('show');
         });
       </script>
+
+<div id="popup" class="popup">
+    <div class="popup-content" id="popupContent"></div>
+  </div>
+  
+  <script>
+    function mostrarPopup(mensagem, tipo = 'error') {
+  const popup = document.getElementById('popup');
+  const popupContent = document.getElementById('popupContent');
+
+  popupContent.textContent = mensagem;
+  popup.className = `popup ${tipo} mostrar`;
+
+  // Remove depois de 3 segundos
+  setTimeout(() => {
+    popup.classList.remove('mostrar');
+  }, 3000);
+}
+{}
+  
+    // Lógica do formulário de login
+    const form = document.getElementById('loginForm');
+  
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+  
+      const email = document.getElementById('emai').value;
+      const senha = document.getElementById('pass').value;
+  
+      try {
+        const response = await fetch('/enviar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+        });
+  
+        const texto = await response.text();
+  
+        if (!response.ok) {
+          mostrarPopup(texto, 'error');
+        } else {
+          mostrarPopup('Login bem-sucedido!', 'success');
+  
+          
+        }
+      } catch (err) {
+        mostrarPopup('Erro no servidor. Tente novamente mais tarde.', 'error');
+      }
+    });
+  </script>
 </body>
 </html>
