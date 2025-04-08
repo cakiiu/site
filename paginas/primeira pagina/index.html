@@ -1,60 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivêntia</title>
-    <link rel="stylesheet" href="primeira.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vivêntia</title>
+  <link rel="stylesheet" href="primeira.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-    
-    <video autoplay muted loop id="videoback">
-        <source src="ondas.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo em HTML5.
-    </video>
+  <video autoplay muted loop id="videoback">
+    <source src="ondas.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo em HTML5.
+  </video>
 
-    
-    <header>
-        <div class="left">
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-            <div class="dropdown-menu" id="dropdown">
-                <a href="#">Início</a>
-                <a href="#">Coleções</a>
-                <a href="#">Sobre</a>
-                <a href="#">Contato</a>
-            </div>
-        </div>
-        
-        <div class="center">
-            <img src="logo.png" alt="Vivêntia Logo" class="logo">
-        </div>
+  <header>
+    <div class="left">
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      <div class="dropdown-menu" id="dropdown">
+        <a href="#">Início</a>
+        <a href="#">Coleções</a>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+      </div>
+    </div>
+    <div class="center">
+      <img src="logo.png" alt="Vivêntia Logo" class="logo" />
+    </div>
+    <div class="right"></div>
+  </header>
 
-        <div class="right"></div>
-    </header>
+  <main>
+    <div class="welcome">Bem-vindo</div>
+    <p class="tagline">Descubra o brilho da elegância atemporal</p>
+    <a href="#colecao" class="cta">Ver Coleção</a>
+  </main>
 
-    
-    <main>
-        <div class="welcome">Bem-vindo</div>
-    </main>
+  <section class="colecao-content">
+    <h2 id="colecao" class="colecao-title">Coleções</h2>
 
-    
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('dropdown');
-            menu.classList.toggle('show');
-        }
+    <div class="anel-section hidden">
+      <img src="anel1.png" alt="Anel de ouro" class="anel-img"/>
+      <div class="anel-texto">
+        <h3 class="anel-descricao">Anel Vivêntia Ouro 18k com Diamante Central</h3>
+        <p>
+          Delicadamente esculpido em ouro 18 quilates, este anel minimalista traz um design elegante com acabamento polido e um diamante central lapidado à mão, cuidadosamente cravejado para realçar o brilho natural da pedra. Ideal para momentos especiais, seu valor estimado é de R$ 4.800,00, refletindo a pureza dos materiais e a excelência artesanal da Vivêntia.
+        </p>
+      </div>
+    </div>
+  </section>
 
-        
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('dropdown');
-            const toggle = document.querySelector('.menu-toggle');
-            if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-                menu.classList.remove('show');
+  <section class="black-section">
+    <h2>Sobre nós</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sit amet.</p>
+    <p>Vivamus porta elit nec massa accumsan, id pulvinar augue porta.</p>
+    <p>Mais conteúdo... Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("dropdown");
+      menu.classList.toggle("show");
+    }
+
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("dropdown");
+      const toggle = document.querySelector(".menu-toggle");
+      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.classList.remove("show");
+      }
+    });
+
+    // Animação no scroll
+    document.addEventListener("DOMContentLoaded", function () {
+      const anel = document.querySelector(".anel-section");
+
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show-anel");
+              observer.unobserve(entry.target);
             }
-        });
-    </script>
+          });
+        },
+        {
+          threshold: 0.3,
+        }
+      );
 
+      observer.observe(anel);
+    });
+  </script>
 </body>
 </html>
