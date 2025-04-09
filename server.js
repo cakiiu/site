@@ -38,7 +38,7 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, './login', 'index.html'));
 });
 
-app.get('/primeirapagina', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './paginas/primeira pagina', 'index.html'));
 });
 
