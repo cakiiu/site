@@ -1,5 +1,6 @@
 * {
   font-family: "Roboto", sans-serif;
+  font-weight: 400;
   margin: 0;
   padding: 0;
   color: white;
@@ -187,7 +188,7 @@ main {
 .colar-section {
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-left: 30%;
   gap: 40px;
   margin-top: 80px;
   opacity: 0;
