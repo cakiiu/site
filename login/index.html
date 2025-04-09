@@ -1,110 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/login.css">
-    <title>Servos™</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/login.css" />
+  <title>Servos™</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
 </head>
 
 <body>
-    <video autoplay muted loop id="videoback">
-        <source src="/ondas.mp4" type="video/mp4">
-    </video>
-    
-    <div class="formulario fade-in" id="formulario">
+  <video autoplay muted loop id="videoback">
+    <source src="/ondas.mp4" type="video/mp4" />
+  </video>
 
-        <div id="erroLogin" class="erro-login" style="display: none; color: red; margin-bottom: 10px;">
-            Email ou senha incorretos.
-          </div>
-
-        <form id="loginForm">
-            <h1>Login</h1>
-            <br>
-
-
-            <label for="email" class="nomes">Email</label>
-            <br>
-            <br>
-            <input type="email" name="email" id="emai" class="caixa">
-            <br>
-            <br>
-
-            <label for="Senha" class="nomes">Senha</label>
-            <br>
-            <br>
-            <input type="password" name="senha" id="pass" class="caixa">
-            
-            <br>
-            <br>
-            
-            <button type="submit" class="limp"> Entrar </button>
-        </form>
-
-        <p class="conta"> Não tem uma conta? </p> <a href="../signup" class="link"> Criar conta </a>
+  <div class="formulario fade-in" id="formulario">
+    <div id="erroLogin" class="erro-login" style="display: none; color: red; margin-bottom: 10px;">
+      Email ou senha incorretos.
     </div>
 
-    <script>
-        window.addEventListener('load', () => {
-          const form = document.getElementById('formulario');
-          form?.classList.add('show');
-        });
-      </script>
+    <form id="loginForm">
+      <h1>Login</h1><br />
 
-<div id="popup" class="popup">
+      <label for="email" class="nomes">Email</label><br /><br />
+      <input type="email" name="email" id="emai" class="caixa"/><br /><br />
+
+      <label for="senha" class="nomes">Senha</label><br /><br />
+      <input type="password" name="senha" id="pass" class="caixa"/><br /><br />
+
+      <button type="submit" class="limp">Entrar</button>
+    </form>
+
+    <p class="conta">Não tem uma conta?</p>
+    <a href="../signup" class="link">Criar conta</a>
+  </div>
+
+  <div id="popup" class="popup">
     <div class="popup-content" id="popupContent"></div>
   </div>
-  
+
   <script>
+    window.addEventListener('load', () => {
+      const form = document.getElementById('formulario');
+      form?.classList.add('show');
+    });
+
     function mostrarPopup(mensagem, tipo = 'error') {
-  const popup = document.getElementById('popup');
-  const popupContent = document.getElementById('popupContent');
+      const popup = document.getElementById('popup');
+      const popupContent = document.getElementById('popupContent');
 
-  popupContent.textContent = mensagem;
-  popup.className = `popup ${tipo} mostrar`;
+      popupContent.textContent = mensagem;
+      popup.className = `popup ${tipo} mostrar`;
 
-  // Remove depois de 3 segundos
-  setTimeout(() => {
-    popup.classList.remove('mostrar');
-  }, 3000);
-}
-{}
-  
-    // Lógica do formulário de login
+      setTimeout(() => {
+        popup.classList.remove('mostrar');
+      }, 3000);
+    }
+
     const form = document.getElementById('loginForm');
-  
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-  
+
       const email = document.getElementById('emai').value;
       const senha = document.getElementById('pass').value;
-  
+
       try {
-        const response = await fetch('/enviar', {
+        const response = await fetch('/login', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
           },
-          body: `email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+          body: JSON.stringify({ email, senha })
         });
-  
-        const texto = await response.text();
-  
-        if (!response.ok) {
-          mostrarPopup(texto, 'error');
-        } else {
+
+        const data = await response.json();
+
+        if (response.ok && data.token) {
+          localStorage.setItem('token', data.token);
           mostrarPopup('Login bem-sucedido!', 'success');
-  
-          
+
+          // Redirecionar para página protegida, se quiser:
+          window.location.href = '/';
+        } else {
+          mostrarPopup(data.message || 'Login falhou', 'error');
         }
       } catch (err) {
         mostrarPopup('Erro no servidor. Tente novamente mais tarde.', 'error');
       }
     });
+
+    // Testar acesso à rota protegida
+    async function acessarProfile() {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch('/profile', {
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      const text = await response.text();
+      alert(text);
+    }
   </script>
+
+  <!-- Botão de teste -->
+
+  <button onclick="acessarProfile()" style="position: fixed; bottom: 10px; right: 10px;">
+    Testar rota protegida
+  </button>
 </body>
 </html>

@@ -100,6 +100,19 @@ header .logo {
   width: auto;
 }
 
+.logout {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}  
+
 .right {
   width: 40px;
 }

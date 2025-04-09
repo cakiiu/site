@@ -27,8 +27,31 @@
       <img src="logo.png" alt="Vivêntia Logo" class="logo" />
     </div>
     <div class="right"></div>
-  </header>
 
+    <!--<script>
+      function logout() {
+        localStorage.removeItem('token'); // Remove o token
+        window.location.href = '/login';  // Redireciona para a página de login
+      }
+      async function acessarProfile() {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch('/profile', {
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      const text = await response.text();
+      alert(text);
+    }
+    </script>  
+  
+    <button onclick="logout()" class="logout">Sair</button>
+    
+    <button onclick="acessarProfile()" style="position: fixed; bottom: 10px; right: 10px;">Testar rota protegida</button>
+    -->
+  </header>
   <main>
     <div class="welcome">Bem-vindo</div>
     <p class="tagline">Descubra o brilho da elegância atemporal!</p>
