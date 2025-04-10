@@ -379,7 +379,7 @@ main {
 
 .logout {
   position: fixed;
-  top: 20px;
+  top: 15px;
   right: 20px;
   padding: 10px 15px;
   background-color: #000000;
