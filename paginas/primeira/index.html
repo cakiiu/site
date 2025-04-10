@@ -54,9 +54,40 @@
   </header>
 
   <main>
-    <div class="welcome">Bem-vindo</div>
+    <h1 class="welcome">Bem-vindo </h1>
     <p class="tagline">Descubra o brilho da elegância atemporal!</p>
     <a href="#colecao" class="cta">Ver Loja</a>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("token");
+    
+        if (token) {
+          fetch("/profile", {
+            method: "GET",
+            headers: {
+              Authorization: token
+            }
+          })
+          .then((res) => res.text())
+          .then((data) => {
+            // Extrai o nome do texto retornado
+            const nome = data.split(",")[1]?.split("!")[0]?.trim();
+    
+            if (nome) {
+              // Deixa a primeira letra maiúscula e o resto minúsculo
+              const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
+    
+              const h1 = document.querySelector(".welcome");
+              h1.textContent = `Bem-vindo, ${nomeFormatado}`;
+            }
+          })
+          .catch((err) => {
+            console.error("Erro ao buscar o perfil:", err);
+          });
+        }
+      });
+    </script>
   </main>
 
   <section class="colecao-content" id="colecao">
